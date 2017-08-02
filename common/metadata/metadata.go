@@ -17,6 +17,7 @@ limitations under the License.
 package metadata
 
 // Variables defined by the Makefile and passed in with ldflags
+// 全局变量由MAKEFILE通过ldflags传递过来
 var Version string
 var BaseVersion string
 var BaseDockerLabel string

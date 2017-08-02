@@ -126,7 +126,7 @@ type ChannelCmdFactory struct {
 	Signer           msp.SigningIdentity
 	BroadcastClient  common.BroadcastClient
 	DeliverClient    deliverClientIntf
-	BroadcastFactory BroadcastClientFactory
+	BroadcastFactory BroadcastClientFactory // 广播方式工厂，还是要讲一下DP
 }
 
 // InitCmdFactory init the ChannelCmdFactory with clients to endorser and orderer according to params
@@ -139,7 +139,7 @@ func InitCmdFactory(isEndorserRequired EndorserRequirement, isOrdererRequired Or
 	if err != nil {
 		return nil, fmt.Errorf("Error getting default signer: %s", err)
 	}
-
+	// 函数指针
 	cmdFact.BroadcastFactory = func() (common.BroadcastClient, error) {
 		return common.GetBroadcastClientFnc(orderingEndpoint, tls, caFile)
 	}
@@ -171,6 +171,7 @@ func InitCmdFactory(isEndorserRequired EndorserRequirement, isOrdererRequired Or
 		} else {
 			opts = append(opts, grpc.WithInsecure())
 		}
+		// 连接order节点
 		conn, err := grpc.Dial(orderingEndpoint, opts...)
 		if err != nil {
 			return nil, err
@@ -180,7 +181,7 @@ func InitCmdFactory(isEndorserRequired EndorserRequirement, isOrdererRequired Or
 		if err != nil {
 			return nil, fmt.Errorf("Error connecting due to  %s", err)
 		}
-
+		// 建立deliverclient，负责同order之间的通信
 		cmdFact.DeliverClient = newDeliverClient(conn, client, chainID)
 	}
 	logger.Infof("Endorser and orderer connections initialized")

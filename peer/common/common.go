@@ -116,6 +116,7 @@ func GetEndorserClient() (pb.EndorserClient, error) {
 		err = errors.ErrorWithCallstack("PER", "404", "Error trying to connect to local peer").WrapError(err)
 		return nil, err
 	}
+	// 基于具体连接的client，在设计grpc的协议连接与业务处理的client进行绑定，其他类似
 	endorserClient := pb.NewEndorserClient(clientConn)
 	return endorserClient, nil
 }

@@ -34,6 +34,11 @@ type BroadcastClient interface {
 	Close() error
 }
 
+/*
+interface 定义抽象接口
+数据结构定义数据，完成业务的的抽象
+通过组合等实现复用
+*/
 type broadcastClient struct {
 	conn   *grpc.ClientConn
 	client ab.AtomicBroadcast_BroadcastClient
@@ -62,7 +67,7 @@ func GetBroadcastClient(orderingEndpoint string, tlsEnabled bool, caFile string)
 
 	opts = append(opts, grpc.WithTimeout(3*time.Second))
 	opts = append(opts, grpc.WithBlock())
-
+	// 可变参数
 	conn, err := grpc.Dial(orderingEndpoint, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("Error connecting to %s due to %s", orderingEndpoint, err)

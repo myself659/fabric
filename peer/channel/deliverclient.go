@@ -136,6 +136,7 @@ func getGenesisBlock(cf *ChannelCmdFactory) (*common.Block, error) {
 			cf.DeliverClient.Close()
 			return nil, fmt.Errorf("timeout waiting for channel creation")
 		default:
+			// 创世块高度为0
 			if block, err := cf.DeliverClient.getSpecifiedBlock(0); err != nil {
 				cf.DeliverClient.Close()
 				cf, err = InitCmdFactory(EndorserNotRequired, OrdererRequired)

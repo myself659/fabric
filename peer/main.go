@@ -43,6 +43,20 @@ var logOutput = os.Stderr
 // Constants go here.
 const cmdRoot = "core"
 
+/*
+与h3c comware 的命令行实现进行比较
+联想功能
+命令管理 MID + CMDID
+MOR每个命令必须有一个
+一个命令行实现
+一个root 命令
+命令元素
+命令元素检查
+命令元素提示
+命令元素描述
+可选命令元素与必选命令元素是如何实现的
+
+*/
 // The main command describes the service and
 // defaults to printing the help message.
 var mainCmd = &cobra.Command{
@@ -72,6 +86,16 @@ var mainCmd = &cobra.Command{
 // Peer command version flag
 var versionFlag bool
 
+/*
+配置文件的位置
+
+*/
+/*
+peer节点功能：
+一个网络实体，维护ledger并运行Chaincode容器来对ledger执行read/write操作。
+peer由Member拥有和维护
+
+*/
 func main() {
 	// For environment variables.
 	viper.SetEnvPrefix(cmdRoot)
@@ -93,7 +117,7 @@ func main() {
 	if err != nil { // Handle errors reading the config file
 		panic(fmt.Errorf("Fatal error when initializing %s config : %s\n", cmdRoot, err))
 	}
-
+	// 并行子命令
 	mainCmd.AddCommand(version.Cmd())
 	mainCmd.AddCommand(node.Cmd())
 	mainCmd.AddCommand(chaincode.Cmd(nil))
@@ -120,3 +144,15 @@ func main() {
 	}
 	logger.Info("Exiting.....")
 }
+
+/*
+
+peer node  start 命令 peer节点工作
+
+*/
+
+/*
+
+读取配置文件
+
+*/

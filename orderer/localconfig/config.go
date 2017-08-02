@@ -68,18 +68,18 @@ type TopLevel struct {
 
 // General contains config which should be common among all orderer types.
 type General struct {
-	LedgerType     string
-	ListenAddress  string
-	ListenPort     uint16
+	LedgerType     string // order 配置类型, 分为三种: file, json, ram createLedgerFactory
+	ListenAddress  string //侦听地址
+	ListenPort     uint16 // 侦听端口
 	TLS            TLS
-	GenesisMethod  string
+	GenesisMethod  string // 两种类型：provisional, file
 	GenesisProfile string
 	GenesisFile    string
 	Profile        Profile
 	LogLevel       string
-	LocalMSPDir    string
+	LocalMSPDir    string //
 	LocalMSPID     string
-	BCCSP          *bccsp.FactoryOpts
+	BCCSP          *bccsp.FactoryOpts //
 }
 
 // TLS contains config for TLS connections.

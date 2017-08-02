@@ -40,7 +40,7 @@ func instantiateCmd(cf *ChaincodeCmdFactory) *cobra.Command {
 		Long:      fmt.Sprint(instantiateDesc),
 		ValidArgs: []string{"1"},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return chaincodeDeploy(cmd, args, cf)
+			return chaincodeDeploy(cmd, args, cf) //  完成智能合约的部署
 		},
 	}
 	flagList := []string{

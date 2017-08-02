@@ -46,7 +46,7 @@ type genericHandlerList struct {
 
 type chaincodeHandlerList struct {
 	sync.RWMutex
-	handlers map[string]map[string]map[*handler]bool
+	handlers map[string]map[string]map[*handler]bool // map map map
 }
 
 func (hl *chaincodeHandlerList) add(ie *pb.Interest, h *handler) (bool, error) {

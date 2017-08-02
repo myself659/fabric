@@ -51,6 +51,7 @@ type Platform interface {
 var logger = flogging.MustGetLogger("chaincode-platform")
 
 // Find returns the platform interface for the given platform type
+// chaincode编码类型
 func Find(chaincodeType pb.ChaincodeSpec_Type) (Platform, error) {
 
 	switch chaincodeType {
@@ -66,6 +67,7 @@ func Find(chaincodeType pb.ChaincodeSpec_Type) (Platform, error) {
 
 }
 
+// GetDeploymentPayload 获取部署内容
 func GetDeploymentPayload(spec *pb.ChaincodeSpec) ([]byte, error) {
 	platform, err := Find(spec.Type)
 	if err != nil {
@@ -96,6 +98,7 @@ func getPeerTLSCert() ([]byte, error) {
 	return ioutil.ReadFile(path)
 }
 
+/* 生成chaincode dockerfile */
 func generateDockerfile(platform Platform, cds *pb.ChaincodeDeploymentSpec, tls bool) ([]byte, error) {
 
 	var buf []string

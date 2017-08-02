@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
+/*
+在进程层次完成静态chaincode的动态执行
+*/
 package shim
 
 import (
@@ -44,16 +46,16 @@ func (handler *Handler) triggerNextState(msg *pb.ChaincodeMessage, send bool) {
 
 // Handler handler implementation for shim side of chaincode.
 type Handler struct {
-	sync.RWMutex
+	sync.RWMutex // 嵌套结构体
 	//shim to peer grpc serializer. User only in serialSend
 	serialLock sync.Mutex
 	To         string
-	ChatStream PeerChaincodeStream
-	FSM        *fsm.FSM
-	cc         Chaincode
+	ChatStream PeerChaincodeStream // peer 与chaincode实例通信
+	FSM        *fsm.FSM            // 状态机
+	cc         Chaincode           // 为什么需要关联chaincode
 	// Multiple queries (and one transaction) with different txids can be executing in parallel for this chaincode
 	// responseChannel is the channel on which responses are communicated by the shim to the chaincodeStub.
-	responseChannel map[string]chan pb.ChaincodeMessage
+	responseChannel map[string]chan pb.ChaincodeMessage // key的逻辑含义是什么？
 	nextState       chan *nextStateInfo
 }
 

@@ -107,17 +107,21 @@ func userChaincodeStreamGetter(name string) (PeerChaincodeStream, error) {
 	return stream, nil
 }
 
-// chaincodes.
+// chaincodes  启动入口
 func Start(cc Chaincode) error {
 	// If Start() is called, we assume this is a standalone chaincode and set
 	// up formatted logging.
 	SetupChaincodeLogging()
-
+	/*
+		配置信息在哪里？
+		peer chaincode install -n mycc -v 1.0
+		-p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02
+	*/
 	chaincodename := viper.GetString("chaincode.id.name")
 	if chaincodename == "" {
 		return fmt.Errorf("Error chaincode id not provided")
 	}
-
+	// todo：为什么要用factory
 	err := factory.InitFactories(factory.GetDefaultOpts())
 	if err != nil {
 		return fmt.Errorf("Internal error, BCCSP could not be initialized with default options: %s", err)
@@ -132,7 +136,9 @@ func Start(cc Chaincode) error {
 	if err != nil {
 		return err
 	}
-
+	/*
+		chaincode 安装就会指定peer吗？
+	*/
 	err = chatWithPeer(chaincodename, stream, cc)
 
 	return err
@@ -216,6 +222,7 @@ func StartInProc(env []string, args []string, cc Chaincode, recv <-chan *pb.Chai
 	return err
 }
 
+// 获取peer地址
 func getPeerAddress() string {
 	if peerAddress != "" {
 		return peerAddress
@@ -236,6 +243,7 @@ func newPeerClientConnection() (*grpc.ClientConn, error) {
 	return comm.NewClientConnectionWithAddress(peerAddress, true, false, nil)
 }
 
+// chaincode与Peer节点的交互
 func chatWithPeer(chaincodename string, stream PeerChaincodeStream, cc Chaincode) error {
 
 	// Create the shim handler responsible for all control logic

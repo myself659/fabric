@@ -81,6 +81,7 @@ type nextStateInfo struct {
 }
 
 // Handler responsible for management of Peer's side of chaincode stream
+// Handler 用于管理PEER侧的chaincode stream
 type Handler struct {
 	sync.RWMutex
 	//peer to shim grpc serializer. User only in serialSend

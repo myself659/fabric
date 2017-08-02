@@ -317,6 +317,7 @@ func GetInstalledChaincodes() (*pb.ChaincodeQueryResponse, error) {
 }
 
 //CCContext pass this around instead of string of args
+// chaincode context
 type CCContext struct {
 	//ChainID chain id
 	ChainID string
@@ -328,6 +329,7 @@ type CCContext struct {
 	Version string
 
 	//TxID is the transaction id for the proposal (if any)
+	// 怎么生成TxID
 	TxID string
 
 	//Syscc is this a system chaincode

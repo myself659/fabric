@@ -125,6 +125,7 @@ func GetPath(key string) string {
 	return TranslatePath(filepath.Dir(viper.ConfigFileUsed()), p)
 }
 
+/* 固定的配置文件位置*/
 const OfficialPath = "/etc/hyperledger/fabric"
 
 //----------------------------------------------------------------------------------
@@ -136,7 +137,7 @@ const OfficialPath = "/etc/hyperledger/fabric"
 // Viper instance
 //----------------------------------------------------------------------------------
 func InitViper(v *viper.Viper, configName string) error {
-	var altPath = os.Getenv("FABRIC_CFG_PATH")
+	var altPath = os.Getenv("FABRIC_CFG_PATH") // 环境变量
 	if altPath != "" {
 		// If the user has overridden the path with an envvar, its the only path
 		// we will consider

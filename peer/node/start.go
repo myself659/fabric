@@ -83,6 +83,7 @@ func initSysCCs() {
 	logger.Infof("Deployed system chaincodess")
 }
 
+// peer node  start  处理入口
 func serve(args []string) error {
 	logger.Infof("Starting %s", version.GetInfo())
 	ledgermgmt.Initialize()
@@ -345,6 +346,7 @@ func getChaincodeAddressEndpoint() (*pb.PeerEndpoint, error) {
 	}, nil
 }
 
+// 创建grpc server
 func createEventHubServer(secureConfig comm.SecureServerConfig) (comm.GRPCServer, error) {
 	var lis net.Listener
 	var err error
